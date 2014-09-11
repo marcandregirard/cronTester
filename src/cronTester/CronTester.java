@@ -12,12 +12,13 @@ public class CronTester {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws ParseException {
-        final String expression = "0 0 0/4 ? * 2-6";
+        final String expression = args[0];
+	    final int numberOfDates = Integer.parseInt(args[1]);    
         final CronExpression cronExpression = new CronExpression(expression);
-        Date nextValidDate1 = cronExpression.getNextValidTimeAfter(new Date());
-        while(true) {
-        	System.out.println(nextValidDate1);       	
-        	nextValidDate1 = cronExpression.getNextValidTimeAfter(nextValidDate1);
+        Date nextValidDate = cronExpression.getNextValidTimeAfter(new Date());
+        for(int i = 0;i < numberOfDates; i++) {
+        	System.out.println(nextValidDate);       	
+        	nextValidDate = cronExpression.getNextValidTimeAfter(nextValidDate);
         }
  
 
