@@ -1,7 +1,6 @@
 package cronTester;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,21 +16,14 @@ public class CronTester {
 		final String expression = args[0];
 		final int numberOfDates = Integer.parseInt(args[1]);
 		final CronExpression cronExpression = new CronExpression(expression);
-		List<Date> result = createValidTimeDates(cronExpression,numberOfDates);
+		final CronDateCreator dateCreator = new CronDateCreator(cronExpression);
+		List<Date> result = dateCreator.createValidTimeDatesFromNow(numberOfDates);
 		for(Date expected : result) {
 			System.out.println(expected);
 		}
 
 	}
 	
-	private static List<Date> createValidTimeDates(CronExpression cron, int numberOfDates) { 
-		Date nextValidDate = cron.getNextValidTimeAfter(new Date());
-		List<Date> results = new ArrayList<>();
-		for (int i = 0; i < numberOfDates; i++) {
-			results.add(nextValidDate);
-			nextValidDate = cron.getNextValidTimeAfter(nextValidDate);
-		}
-		return results;
-	}
+	
 
 }
