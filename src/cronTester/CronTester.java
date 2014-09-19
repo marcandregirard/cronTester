@@ -20,7 +20,13 @@ public class CronTester {
 		}
 		
 		final String expression = args[0];
-		final int numberOfDates = Integer.parseInt(args[1]);
+		final int numberOfDates;
+		
+		try {
+			numberOfDates = Integer.parseInt(args[1]);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("The second argument need to be a valid integer.");
+		}
 		
 		final CronDateCreator dateCreator = new CronDateCreator(expression);
 		List<Date> result = dateCreator.createValidTimeDatesFromNow(numberOfDates);
