@@ -1,6 +1,7 @@
 package cronTester;
 
 import java.text.ParseException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,19 +20,18 @@ public class CronDateCreator {
 		}
 	}
 	
-	public List<Date> createValidTimeDates(Date startingDate, int numberOfDates) { 
-		Date nextValidDate = cron.getNextValidTimeAfter(startingDate);
-		List<Date> results = new ArrayList<>();
+	public List<Instant> createValidTimeDates(Date startingDate, int numberOfDates) { 
+		List<Instant> results = new ArrayList<>(numberOfDates);
 		
 		for (int i = 0; i < numberOfDates; i++) {
-			results.add(nextValidDate);
-			nextValidDate = cron.getNextValidTimeAfter(nextValidDate);
+			startingDate = cron.getNextValidTimeAfter(startingDate);
+			results.add(Instant.ofEpochMilli(startingDate.getTime()));
 		}
 		
 		return results;
 	}
 	
-	public List<Date> createValidTimeDatesFromNow(int numberOfDates) {
+	public List<Instant> createValidTimeDatesFromNow(int numberOfDates) {
 		return createValidTimeDates(new Date(), numberOfDates);
 	}
 

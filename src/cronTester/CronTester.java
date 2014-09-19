@@ -1,6 +1,6 @@
 package cronTester;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 
@@ -29,10 +29,10 @@ public class CronTester {
 		}
 		
 		final CronDateCreator dateCreator = new CronDateCreator(expression);
-		List<Date> result = dateCreator.createValidTimeDatesFromNow(numberOfDates);
+		List<Instant> results = dateCreator.createValidTimeDatesFromNow(numberOfDates);
 		
-		for(Date expected : result) {
-			System.out.println(expected);
+		for(Instant specificDate : results) {
+			System.out.println(specificDate);
 		}
 
 	}
