@@ -1,28 +1,36 @@
 package cronTester;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import org.quartz.CronExpression;
 
 public class CronTester {
 
 	/**
+	 * The application take two arguments : 
+	 * The first argument is the cron expression surrounded by " : "* * * * * *"
+	 * The second argument is the number of dates you want to verify. It's a simple Integer.
 	 * @param args
-	 * @throws ParseException
 	 */
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
+		if(args.length > 2) {
+			throw new IllegalArgumentException("You should only provide 2 arguments. \"[cronExpression]\" [numberOfDates]");
+		} else if (args.length != 2) {
+			throw new IllegalArgumentException("You need to provide 2 arguments in the following form : \"[cronExpression]\" [numberOfDates]");
+		}
+		
 		final String expression = args[0];
 		final int numberOfDates = Integer.parseInt(args[1]);
-		final CronExpression cronExpression = new CronExpression(expression);
-		final CronDateCreator dateCreator = new CronDateCreator(cronExpression);
+		
+		final CronDateCreator dateCreator = new CronDateCreator(expression);
 		List<Date> result = dateCreator.createValidTimeDatesFromNow(numberOfDates);
+		
 		for(Date expected : result) {
 			System.out.println(expected);
 		}
 
 	}
+
 	
 	
 
